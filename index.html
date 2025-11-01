@@ -93,27 +93,6 @@
             padding: 0.25rem 0.5rem;
         }
 
-        /* Join CTA in nav */
-        .join-btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            padding: 0.55rem 1rem;
-            background: linear-gradient(90deg, var(--color-primary), var(--color-primary-dark));
-            color: var(--color-white);
-            text-decoration: none;
-            border-radius: 999px;
-            font-weight: 700;
-            box-shadow: 0 6px 18px rgba(33, 128, 141, 0.18);
-            border: 1px solid rgba(255,255,255,0.06);
-        }
-
-        .join-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 30px rgba(26, 104, 117, 0.22);
-            opacity: 0.98;
-        }
-
         nav a {
             color: var(--color-white);
             text-decoration: none;
@@ -382,89 +361,78 @@
             opacity: 0.95;
         }
 
-        /* Activities Gallery */
-        .activities-grid {
+        /* --- Events Section --- */
+        .event-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
             gap: 2rem;
             margin-top: 3rem;
         }
 
-        .activity-card {
-            position: relative;
+        .event-card {
+            background: var(--color-white);
             border-radius: 15px;
             overflow: hidden;
-            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.15);
+            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.1);
             transition: transform 0.3s, box-shadow 0.3s;
-            cursor: pointer;
-            height: 300px;
         }
 
-        .activity-card:hover {
+        .event-card:hover {
             transform: translateY(-10px);
-            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.25);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
         }
 
-        .activity-card img {
+        .event-image img {
             width: 100%;
-            height: 100%;
+            height: 250px;
             object-fit: cover;
-            transition: transform 0.5s;
         }
 
-        .activity-card:hover img {
-            transform: scale(1.1);
-        }
-
-        .activity-overlay {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background: linear-gradient(to top, rgba(26, 26, 46, 0.95), transparent);
+        .event-content {
             padding: 2rem;
-            color: var(--color-white);
-            transform: translateY(70%);
-            transition: transform 0.3s;
         }
 
-        .activity-card:hover .activity-overlay {
-            transform: translateY(0);
-        }
-
-        .activity-overlay h3 {
+        .event-content h3 {
             font-size: 1.5rem;
-            margin-bottom: 0.5rem;
+            color: var(--color-dark);
+            margin-bottom: 1rem;
+        }
+        
+        .event-date {
+            font-weight: 600;
+            color: var(--color-primary);
+            margin-bottom: 1rem;
         }
 
-        .activity-overlay p {
-            font-size: 0.95rem;
-            opacity: 0.9;
+        .event-content p {
+            font-size: 1rem;
+            color: #666;
+            margin-bottom: 1.5rem;
+        }
+       
+        /* --- ADDED: Team Styles --- */
+        #leadership {
+            /* This section has a light background, no image */
+             background-color: var(--color-light);
         }
 
-        /* Team Section */
-        #team {
-            background-image: url('IMG_0073-1.jpg');
-            background-size: cover;
-            background-position: center;
-            background-attachment: fixed;
+        .section-subtitle {
+            text-align: center;
+            font-size: 2.2rem;
+            color: var(--color-primary-dark);
+            margin-top: 4rem;
+            margin-bottom: 2.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid rgba(33, 128, 141, 0.2);
+            display: inline-block;
+            left: 50%;
             position: relative;
+            transform: translateX(-50%);
         }
 
-        #team::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(245, 245, 245, 0.93);
-            z-index: 1;
-        }
-
-        #team > * {
-            position: relative;
-            z-index: 2;
+        /* Make first subtitle (leadership) have no top margin */
+        #leadership .section-subtitle {
+            margin-top: 0;
         }
 
         .team-grid {
@@ -487,7 +455,6 @@
             transform: translateY(-10px);
         }
 
-        /* NEW STYLE for team images */
         .team-avatar-img {
             width: 120px;
             height: 120px;
@@ -514,7 +481,7 @@
             color: #666;
             font-size: 0.95rem;
         }
-       
+
         /* Footer */
         footer {
             background: #0f0f1a;
@@ -568,9 +535,8 @@
             color: var(--color-primary);
         }
         
-        /* Style for the 'Join' box from the screenshot */
         .join-box {
-            background: #1a1a2e; /* Darker purple/blue from screenshot */
+            background: #1a1a2e;
             padding: 2.5rem;
             border-radius: 15px;
         }
@@ -591,7 +557,7 @@
             text-decoration: none;
             font-weight: 700;
             color: var(--color-white);
-            background: linear-gradient(90deg, #007BFF, #00C6FF); /* Blue gradient from screenshot */
+            background: linear-gradient(90deg, #007BFF, #00C6FF);
             box-shadow: 0 4px 15px rgba(0, 198, 255, 0.2);
             transition: all 0.3s ease;
             text-align: center;
@@ -659,7 +625,6 @@
                 font-size: 0.9rem;
             }
 
-            /* show toggle and collapse nav on small screens */
             #nav-toggle {
                 display: block;
             }
@@ -688,16 +653,24 @@
             .about-content {
                 grid-template-columns: 1fr;
             }
-
-            .activities-grid {
+ 
+            .event-grid {
                 grid-template-columns: 1fr;
+            }
+
+            /* ADDED */
+            .team-grid {
+                 grid-template-columns: 1fr;
+            }
+            
+            .form-container {
+                padding: 2rem;
             }
 
             section {
                 padding: 3rem 5%;
             }
 
-            /* Responsive for footer */
             .footer-container {
                 grid-template-columns: 1fr;
                 gap: 3rem;
@@ -714,19 +687,25 @@
     </style>
 </head>
 <body>
+    <!-- Navigation -->
     <nav>
         <div class="container">
             <div class="logo">Tech <span>Amigos</span></div>
             <button id="nav-toggle" aria-controls="main-nav" aria-expanded="false" aria-label="Toggle navigation">☰</button>
             <ul id="main-nav">
                 <li><a href="#home">Home</a></li>
+                <!-- RE-ORDERED -->
+                <li><a href="#events">Events</a></li> 
                 <li><a href="#about">About</a></li>
-                <li><a href="#activities">Activities</a></li>
-                <li><a href="#team">Team</a></li>
+                <!-- UPDATED LINK -->
+                <li><a href="activities.html">Activities</a></li>
+                <li><a href="team.html">Team</a></li>
+                <li><a href="register.html" target="_blank">Register</a></li>
             </ul>
         </div>
     </nav>
 
+    <!-- Hero Section -->
     <section id="home" class="hero">
         <div class="hero-background">
             <div class="hero-slide active">
@@ -754,9 +733,8 @@
         <div class="hero-content">
             <h1>Tech Amigos Club</h1>
             <p>Empowering Innovation, Building Community</p>
-            <a href="#about" class="btn">Explore More</a>
+            <a href="#events" class="btn">Explore More</a> 
             <div class="hero-stats">
-                
                 <div class="stat-item">
                     <span class="stat-number">50+</span>
                     <span class="stat-label">Events Hosted</span>
@@ -769,21 +747,28 @@
         </div>
     </section>
 
-    <section id="about">
-        <h2 class="section-title">About Us</h2>
-        <div class="about-content">
-            <div class="about-image">
-                <img src="event1.2.jpg" alt="Tech Amigos Event">
+    <!-- --- Upcoming Events Section --- -->
+    <section id="events">
+        <h2 class="section-title">Upcoming Events</h2>
+        <div class="event-grid">
+            <div class="event-card">
+                <div class="event-image">
+                    <img src="event_placeholder.jpg" alt="Placeholder Event">
+                </div>
+                <div class="event-content">
+                    <div class="event-date">November 25, 2025</div>
+                    <h3>Placeholder Event Title</h3>
+                    <p>This is a description for the upcoming event. Talk about what members will learn, who the speaker is, and why they should attend. Keep it concise!</p>
+                    <a href="register.html" target="_blank" class="btn" style="background: var(--color-primary); color: white;">Register Now</a>
+                </div>
             </div>
-            <div class="about-text">
-                <h3>Leading Tech Community at CGC Landran</h3>
-                <p>Tech Amigos is the premier technology club at CGC Landran, dedicated to fostering innovation, creativity, and technical excellence among students. We believe in learning by doing, and our community is built on collaboration, knowledge sharing, and pushing the boundaries of what's possible.</p>
-                <p>Our mission is to create a platform where passionate tech enthusiasts can come together to learn, build, and innovate. From hackathons to workshops, coding competitions to tech talks, we provide countless opportunities for our members to grow their skills and network with like-minded individuals.</p>
-                <p>Whether you're a beginner taking your first steps into the world of technology or an experienced developer looking to collaborate on exciting projects, Tech Amigos welcomes you to join our thriving community.</p>
-            </div>
+            
         </div>
     </section>
 
+
+
+    <!-- Trophy Section -->
     <section>
         <div class="trophy-section">
             <div class="trophy-content">
@@ -797,48 +782,8 @@
         </div>
     </section>
 
-    <section id="activities">
-        <h2 class="section-title">Our Activities</h2>
-        <div class="activities-grid">
-            <div class="activity-card">
-                <img src="event1.jpg" alt="Hackathon Event">
-                <div class="activity-overlay">
-                    <h3>Workshops1</h3>
-                    <p>2Hands-on learning sessions covering the latest technologies and industry best practices</p>
-                </div>
-            </div>
-            <div class="activity-card">
-                <img src="event1.2.jpg" alt="Tech Workshop">
-                <div class="activity-overlay">
-                    <h3>Workshops2</h3>
-                    <p>Hands-on learning sessions covering the latest technologies and industry best practices.</p>
-                </div>
-            </div>
-            <div class="activity-card">
-                <img src="IMG_0079.jpg" alt="Team Activity">
-                <div class="activity-overlay">
-                    <h3>Team Building</h3>
-                    <p>Fun activities and collaborative projects that strengthen our tech family bonds.</p>
-                </div>
-            </div>
-            <div class="activity-card">
-                <img src="grp1.jpg" alt="Group Photo">
-                <div class="activity-overlay">
-                    <h3>Group Photo</h3>
-                    <p>Capture the moments with our amazing team!</p>
-                </div>
-            </div>
-            <div class="activity-card">
-                <img src="grp.jpg" alt="Tech Talks">
-                <div class="activity-overlay">
-                    <h3>Tech Talks</h3>
-                    <p>Industry experts share their knowledge and experiences with our community.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section id="team">
+    <!-- --- ADDED: Leadership Section --- -->
+    <section id="leadership">
         <h2 class="section-title">Our Leadership</h2>
         <div class="team-grid">
             <div class="team-card">
@@ -860,8 +805,29 @@
                 <p>Managing records, communications, and member coordination</p>
             </div>
         </div>
+        <div style="text-align: center; margin-top: 3rem;">
+            <a href="team.html" class="btn">See All Teams</a>
+        </div>
     </section>
 
+
+    <!-- About Section -->
+    <section id="about">
+        <h2 class="section-title">About Us</h2>
+        <div class="about-content">
+            <div class="about-image">
+                <img src="event1.2.jpg" alt="Tech Amigos Event">
+            </div>
+            <div class="about-text">
+                <h3>Leading Tech Community at CGC Landran</h3>
+                <p>Tech Amigos is the premier technology club at CGC Landran, dedicated to fostering innovation, creativity, and technical excellence among students. We believe in learning by doing, and our community is built on collaboration, knowledge sharing, and pushing the boundaries of what's possible.</p>
+                <p>Our mission is to create a platform where passionate tech enthusiasts can come together to learn, build, and innovate. From hackathons to workshops, coding competitions to tech talks, we provide countless opportunities for our members to grow their skills and network with like-minded individuals.</p>
+                <p>Whether you're a beginner taking your first steps into the world of technology or an experienced developer looking to collaborate on exciting projects, Tech Amigos welcomes you to join our thriving community.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
     <footer>
         <div class="footer-container">
             <div class="footer-column" id="footer-about">
@@ -872,15 +838,15 @@
                 <h3>Connect With Us</h3>
                 <ul class="social-links">
                     <li><a href="#">💼 Follow us on LinkedIn</a></li>
-                    <li><a href="#">📷 Follow us on Instagram</a></li>
-                    <li><a href="mailto:hello@techamigosclub.com">📧 hello@techamigosclub.com</a></li>
+                    <li><a href="https://www.instagram.com/techamigosclub.dsw/">📷 Follow us on Instagram</a></li>
+                    <li><a href="#">📧 hello@techamigosclub.com</a></li>
                 </ul>
             </div>
             <div class="footer-column" id="footer-join">
                 <div class="join-box">
                     <h3>Join Our Community</h3>
                     <p>Join our <strong>WhatsApp group</strong> for instant updates, discussions, and event notifications!</p>
-                    <a href="#" class="whatsapp-btn">Join WhatsApp Group</a>
+                    <a href="https://chat.whatsapp.com/KsU9mqGZlKA9YjT1NfZyx5?mode=wwt" class="whatsapp-btn">Join WhatsApp Group</a>
                 </div>
             </div>
         </div>
@@ -889,6 +855,7 @@
         </div>
     </footer>
 
+    <!-- Scripts -->
     <script>
         (function() {
             const navToggle = document.getElementById('nav-toggle');
@@ -901,8 +868,8 @@
                 navToggle.setAttribute('aria-expanded', opened ? 'true' : 'false');
             });
 
-            // Close mobile nav when a link is clicked
-            mainNav.querySelectorAll('a').forEach(a => {
+            // This part is for same-page links, it won't run for external links
+            mainNav.querySelectorAll('a[href^="#"]').forEach(a => {
                 a.addEventListener('click', () => {
                     if (mainNav.classList.contains('open')) {
                         mainNav.classList.remove('open');
@@ -911,7 +878,6 @@
                 });
             });
 
-            // Hide nav when scrolling down, show when scrolling up
             let lastY = window.scrollY || 0;
             let ticking = false;
 
@@ -919,18 +885,14 @@
                 const currentY = window.scrollY || 0;
                 const delta = currentY - lastY;
 
-                // small threshold to avoid jitter
                 if (Math.abs(delta) > 10) {
                     if (currentY > lastY && currentY > 120) {
-                        // scrolling down
                         navEl.classList.add('hidden');
                     } else {
-                        // scrolling up
                         navEl.classList.remove('hidden');
                     }
                 }
 
-                // if mobile menu is open, close it on scroll to avoid overlay
                 if (mainNav.classList.contains('open')) {
                     mainNav.classList.remove('open');
                     navToggle.setAttribute('aria-expanded', 'false');
@@ -949,47 +911,39 @@
         })();
     </script>
 
+    <!-- GSAP Libraries -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollToPlugin.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
     
     <script>
-        // GSAP Hero slideshow with smooth transitions
         const slides = document.querySelectorAll('.hero-slide');
         let currentSlide = 0;
         const totalSlides = slides.length;
 
-        // Initialize all slides
         gsap.set(slides, { opacity: 0 });
         gsap.set(slides[0], { opacity: 1 });
 
         function showNextSlide() {
             const nextSlide = (currentSlide + 1) % totalSlides;
-            
-            // Fade out current slide
-            gsap.to(slides[currentSlide], {
-                opacity: 0,
-                duration: 1.5,
-                ease: "power2.inOut"
-            });
-            
-            // Fade in next slide
-            gsap.to(slides[nextSlide], {
-                opacity: 1,
-                duration: 1.5,
-                ease: "power2.inOut"
-            });
-            
+            gsap.to(slides[currentSlide], { opacity: 0, duration: 1.5, ease: "power2.inOut" });
+            gsap.to(slides[nextSlide], { opacity: 1, duration: 1.5, ease: "power2.inOut" });
             currentSlide = nextSlide;
         }
-
-        // Auto advance slides every 4 seconds
         setInterval(showNextSlide, 4000);
 
-        // Smooth scrolling for navigation links
+        // Updated smooth scroll to ignore external links
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 e.preventDefault();
                 const target = document.querySelector(this.getAttribute('href'));
+                
+                const mainNav = document.getElementById('main-nav');
+                if (mainNav.classList.contains('open')) {
+                    mainNav.classList.remove('open');
+                    document.getElementById('nav-toggle').setAttribute('aria-expanded', 'false');
+                }
+
                 if (target) {
                     gsap.to(window, {
                         duration: 1,
@@ -1000,11 +954,10 @@
             });
         });
 
-        // Scroll animations with GSAP
         gsap.registerPlugin(ScrollTrigger);
 
-        // Animate activity cards
-        gsap.utils.toArray('.activity-card').forEach((card, i) => {
+        // Updated to only animate event cards on this page
+        gsap.utils.toArray('.event-card').forEach((card, i) => {
             gsap.from(card, {
                 scrollTrigger: {
                     trigger: card,
@@ -1014,12 +967,12 @@
                 opacity: 0,
                 y: 50,
                 duration: 0.8,
-                delay: i * 0.1,
+                delay: (i % 3) * 0.1,
                 ease: "power2.out"
             });
         });
 
-        // Animate team cards
+        // ADDED: Animate leadership team cards
         gsap.utils.toArray('.team-card').forEach((card, i) => {
             gsap.from(card, {
                 scrollTrigger: {
@@ -1030,13 +983,12 @@
                 opacity: 0,
                 y: 50,
                 duration: 0.8,
-                delay: i * 0.1,
+                delay: (i % 3) * 0.1,
                 ease: "power2.out"
             });
         });
 
-        // Animate section titles
-        gsap.utils.toArray('.section-title').forEach(title => {
+        gsap.utils.toArray('.section-title, .section-subtitle').forEach(title => {
             gsap.from(title, {
                 scrollTrigger: {
                     trigger: title,
@@ -1050,7 +1002,6 @@
             });
         });
 
-        // Animate trophy section
         gsap.from('.trophy-section', {
             scrollTrigger: {
                 trigger: '.trophy-section',
@@ -1062,7 +1013,9 @@
             duration: 1,
             ease: "power2.out"
         });
+        
     </script>
     
 </body>
 </html>
+
