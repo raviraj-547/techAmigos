@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Activities - Tech Amigos Club</title>
+    <style>
+        /* Copied all styles from index.html to ensure consistency */
+        :root {
+            --color-primary: #21808d;
+            --nav-height: 72px;
+            --color-primary-dark: #1a6875;
+            --color-accent: #c0152f;
+            --color-dark: #1a1a2e;
+            --color-light: #f5f5f5;
+            --color-white: #ffffff;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--color-dark);
+            background-color: var(--color-light);
+            padding-top: var(--nav-height); /* Add padding to offset fixed nav */
+        }
+
+        /* --- Simple Nav for Activities Page --- */
+        nav {
+            background: rgba(26, 26, 46, 0.95);
+            backdrop-filter: blur(8px);
+            height: var(--nav-height);
+            padding: 0 5%;
+            position: fixed; /* Fixed at the top */
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.12);
+            display: flex;
+            align-items: center;
+        }
+
+        nav .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1400px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        nav .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: var(--color-white);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        nav .logo span {
+            color: var(--color-primary);
+        }
+
+        nav .back-link {
+            color: var(--color-white);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+            font-size: 1.1rem;
+        }
+
+        nav .back-link:hover {
+            color: var(--color-primary);
+        }
+
+        /* --- Copied Section Styles --- */
+        section {
+            padding: 5rem 5%;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            color: var(--color-dark);
+            position: relative;
+            padding-bottom: 1rem;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--color-primary), var(--color-accent));
+            border-radius: 2px;
+        }
+        
+        #activities {
+            min-height: calc(100vh - var(--nav-height) - 70px); /* 70px for footer */
+        }
+
+        /* --- Copied Activities Styles --- */
+        .activities-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .activity-card {
+            position: relative;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.15);
+            transition: transform 0.3s, box-shadow 0.3s;
+            cursor: pointer;
+            height: 300px;
+        }
+
+        .activity-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.25);
+        }
+
+        .activity-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+
+        .activity-card:hover img {
+            transform: scale(1.1);
+        }
+
+        .activity-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to top, rgba(26, 26, 46, 0.95), transparent);
+            padding: 2rem;
+            color: var(--color-white);
+            transform: translateY(70%);
+            transition: transform 0.3s;
+        }
+
+        .activity-card:hover .activity-overlay {
+            transform: translateY(0);
+        }
+
+        .activity-overlay h3 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .activity-overlay p {
+            font-size: 0.95rem;
+            opacity: 0.9;
+        }
+
+        /* --- Copied Modal Styles --- */
+        #modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 2000;
+            opacity: 0;
+            transition: opacity 0.3s ease-in-out;
+            cursor: pointer;
+        }
+
+        #modal-container {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0.95);
+            background: var(--color-white);
+            border-radius: 15px;
+            width: 90%;
+            max-width: 600px;
+            z-index: 2001;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+            opacity: 0;
+            transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+            overflow: hidden; /* To keep border-radius on image */
+            max-height: 90vh;
+        }
+
+        #modal-overlay.active,
+        #modal-container.active {
+            display: block;
+            opacity: 1;
+        }
+        
+        #modal-container.active {
+             transform: translate(-50%, -50%) scale(1);
+        }
+
+        #modal-close-btn {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            background: rgba(0,0,0,0.3);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            font-size: 1.5rem;
+            line-height: 28px;
+            text-align: center;
+            cursor: pointer;
+            z-index: 10;
+            transition: background 0.3s;
+        }
+        
+        #modal-close-btn:hover {
+            background: rgba(0,0,0,0.6);
+        }
+
+        #modal-image {
+            width: 100%;
+            height: 280px;
+            object-fit: cover;
+            display: block;
+        }
+        
+        #modal-content {
+            padding: 1.5rem 2rem 2rem;
+            max-height: 50vh; /* max-height for content area */
+            overflow-y: auto;
+        }
+
+        #modal-title {
+            font-size: 1.8rem;
+            color: var(--color-dark);
+            margin-bottom: 1rem;
+        }
+
+        #modal-description {
+            font-size: 1.1rem;
+            color: #555;
+            line-height: 1.7;
+        }
+
+        /* --- Simple Footer --- */
+        footer {
+            text-align: center;
+            padding: 2rem;
+            background: var(--color-light);
+            color: #888;
+            font-size: 0.9rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .activities-grid {
+                 grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Simple Navigation -->
+    <nav>
+        <div class="container">
+            <div class="logo">Tech <span>Amigos</span></div>
+            <a href="index.html" class="back-link">← Back to Home</a>
+        </div>
+    </nav>
+
+    <!-- Activities Section -->
+    <section id="activities">
+        <h2 class="section-title">Our Activities</h2>
+        <div class="activities-grid">
+            <!-- Added data attributes for modal -->
+            <div class="activity-card" data-title="Workshops1" data-description="2Hands-on learning sessions covering the latest technologies and industry best practices" data-image="event1.jpg">
+                <img src="event1.jpg" alt="Hackathon Event">
+                <div class="activity-overlay">
+                    <h3>Workshops1</h3>
+                    <p>2Hands-on learning sessions covering the latest technologies and industry best practices</p>
+                </div>
+            </div>
+            <div class="activity-card" data-title="Workshops2" data-description="Hands-on learning sessions covering the latest technologies and industry best practices." data-image="event1.2.jpg">
+                <img src="event1.2.jpg" alt="Tech Workshop">
+                <div class="activity-overlay">
+                    <h3>Workshops2</h3>
+                    <p>Hands-on learning sessions covering the latest technologies and industry best practices.</p>
+                </div>
+            </div>
+            <div class="activity-card" data-title="Team Building" data-description="Fun activities and collaborative projects that strengthen our tech family bonds." data-image="IMG_0079.jpg">
+                <img src="IMG_0079.jpg" alt="Team Activity">
+                <div class="activity-overlay">
+                    <h3>Team Building</h3>
+                    <p>Fun activities and collaborative projects that strengthen our tech family bonds.</p>
+                </div>
+            </div>
+            <div class="activity-card" data-title="Group Photo" data-description="Capture the moments with our amazing team!" data-image="grp1.jpg">
+                <img src="grp1.jpg" alt="Group Photo">
+                <div class="activity-overlay">
+                    <h3>Group Photo</h3>
+                    <p>Capture the moments with our amazing team!</p>
+                </div>
+            </div>
+            <div class="activity-card" data-title="Tech Talks" data-description="Industry experts share their knowledge and experiences with our community." data-image="grp.jpg">
+                <img src="grp.jpg" alt="Tech Talks">
+                <div class="activity-overlay">
+                    <h3>Tech Talks</h3>
+                    <p>Industry experts share their knowledge and experiences with our community.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- --- Activity Modal --- -->
+    <div id="modal-overlay"></div>
+    <div id="modal-container">
+        <button id="modal-close-btn">&times;</button>
+        <img id="modal-image" src="" alt="Activity Image">
+        <div id="modal-content">
+            <h3 id="modal-title"></h3>
+            <p id="modal-description"></p>
+        </div>
+    </div>
+
+    <!-- Simple Footer -->
+    <footer>
+        <p>&copy; 2025 Tech Amigos Club - CGC Landran</p>
+    </footer>
+
+    <!-- GSAP Libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+    <!-- --- Activity Modal Logic --- -->
+    <script>
+        (function() {
+            const modalOverlay = document.getElementById('modal-overlay');
+            const modalContainer = document.getElementById('modal-container');
+            const modalCloseBtn = document.getElementById('modal-close-btn');
+            const modalImage = document.getElementById('modal-image');
+            const modalTitle = document.getElementById('modal-title');
+            const modalDescription = document.getElementById('modal-description');
+            
+            const activityCards = document.querySelectorAll('.activity-card');
+
+            if (!modalContainer) return; // Exit if modal not on page
+
+            function openModal(card) {
+                // Get data from the clicked card's dataset
+                const title = card.dataset.title;
+                const description = card.dataset.description;
+                const imageSrc = card.dataset.image;
+
+                // Populate the modal
+                modalTitle.textContent = title;
+                modalDescription.textContent = description;
+                modalImage.src = imageSrc;
+                modalImage.alt = title; // Set alt text for accessibility
+
+                // Show the modal
+                modalOverlay.classList.add('active');
+                modalContainer.classList.add('active');
+            }
+
+            function closeModal() {
+                modalOverlay.classList.remove('active');
+                modalContainer.classList.remove('active');
+            }
+
+            // Add click listener to all activity cards
+            activityCards.forEach(card => {
+                card.addEventListener('click', () => {
+                    openModal(card);
+                });
+            });
+
+            // Add close listeners
+            modalCloseBtn.addEventListener('click', closeModal);
+            modalOverlay.addEventListener('click', closeModal);
+
+        })();
+    </script>
+
+    <!-- GSAP Animations for this page -->
+    <script>
+        gsap.registerPlugin(ScrollTrigger);
+
+        gsap.utils.toArray('.activity-card').forEach((card, i) => {
+            gsap.from(card, {
+                scrollTrigger: {
+                    trigger: card,
+                    start: "top bottom-=100",
+                    toggleActions: "play none none reverse"
+                },
+                opacity: 0,
+                y: 50,
+                duration: 0.8,
+                delay: (i % 3) * 0.1, // Stagger rows
+                ease: "power2.out"
+            });
+        });
+
+        gsap.from('.section-title', {
+            scrollTrigger: {
+                trigger: '.section-title',
+                start: "top bottom-=50",
+                toggleActions: "play none none reverse"
+            },
+            opacity: 0,
+            y: 30,
+            duration: 0.8,
+            ease: "power2.out"
+        });
+    </script>
+    
+</body>
+</html>
