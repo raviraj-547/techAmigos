@@ -26,16 +26,15 @@
             line-height: 1.6;
             color: var(--color-dark);
             background-color: var(--color-light);
-            padding-top: var(--nav-height); /* Add padding to offset fixed nav */
+            padding-top: var(--nav-height);
         }
 
-        /* --- Simple Nav for Registration Page --- */
         nav {
             background: rgba(26, 26, 46, 0.95);
             backdrop-filter: blur(8px);
             height: var(--nav-height);
             padding: 0 5%;
-            position: fixed; /* Fixed at the top */
+            position: fixed;
             width: 100%;
             top: 0;
             z-index: 1000;
@@ -78,7 +77,6 @@
             color: var(--color-primary);
         }
 
-        /* --- Copied Section Styles --- */
         section {
             padding: 5rem 5%;
             max-width: 1400px;
@@ -106,10 +104,9 @@
             border-radius: 2px;
         }
 
-        /* --- Copied Form Styles --- */
         #register {
             background: var(--color-light);
-            min-height: calc(100vh - var(--nav-height)); /* Make section fill the page */
+            min-height: calc(100vh - var(--nav-height));
         }
 
         .form-container {
@@ -173,19 +170,18 @@
             cursor: pointer;
         }
 
-        .submit-btn:hover {
+        .submit-btn:hover:not(:disabled) {
             transform: translateY(-3px);
             box-shadow: 0 6px 20px rgba(33, 128, 141, 0.4);
             background: var(--color-primary-dark);
         }
         
-        /* Style for the button when it's loading */
         .submit-btn:disabled {
             background: #aaa;
             cursor: not-allowed;
+            transform: none;
         }
 
-        /* --- Simple Footer --- */
         footer {
             text-align: center;
             padding: 2rem;
@@ -194,11 +190,15 @@
             font-size: 0.9rem;
         }
 
+        .error-message {
+            color: var(--color-accent);
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+            display: none;
+        }
     </style>
 </head>
 <body>
-
-    <!-- Simple Navigation -->
     <nav>
         <div class="container">
             <div class="logo">Tech <span>Amigos</span></div>
@@ -206,65 +206,49 @@
         </div>
     </nav>
 
-    <!-- Registration Form Section -->
     <section id="register">
         <h2 class="section-title">Event Registration</h2>
         <div class="form-container">
-            <p style="text-align: center; font-size: 1.1rem; margin-bottom: 2rem;">Register for one of our upcoming events! Fill out the form below to secure your spot.</p>
+            <p style="text-align: center; font-size: 1.1rem; margin-bottom: 2rem;">
+                Register for one of our upcoming events! Fill out the form below to secure your spot.
+            </p>
 
-            <!-- 
-                NOTE: The form no longer has an 'action' or 'method' attribute.
-                It's handled by the JavaScript below.
-                I've given it an id="registration-form".
-            -->
             <form id="registration-form">
-
-                <!-- Your FormSubmit info is now in the script -->
-                <input type="hidden" name="_subject" value="New Event Registration!">
-                
-                <!-- UPDATED to relative path -->
-                <input type="hidden" name="_next" value="thankyou.html">
-
                 <div class="form-group">
-                    <label for="event">Select Event</label>
+                    <label for="event">Select Event *</label>
                     <select id="event" name="event" required>
-                        <!-- This value comes from the event card on the main page -->
+                        <option value="" disabled selected>Choose an event</option>
                         <option value="Placeholder Event Title">Placeholder Event Title</option>
-                        <!-- Add more <option> tags as you add more events -->
                     </select>
                 </div>
 
                 <div class="form-group">
-                    <label for="name">Full Name</label>
+                    <label for="name">Full Name *</label>
                     <input type="text" id="name" name="name" required>
                 </div>
 
-                
                 <div class="form-group">
-                    <label for="roll_number">Roll Number</label>
+                    <label for="roll_number">Roll Number *</label>
                     <input type="text" id="roll_number" name="roll_number" required>
                 </div>
 
                 <div class="form-group">
-                    <label for="email">Email Address</label>
+                    <label for="email">Email Address *</label>
                     <input type="email" id="email" name="email" required>
                 </div>
 
-              
                 <div class="form-group">
-                    <label for="mobile_number">Mobile Number</label>
-                    <input type="tel" id="mobile_number" name="mobile_number" required>
+                    <label for="mobile_number">Mobile Number *</label>
+                    <input type="tel" id="mobile_number" name="mobile_number" pattern="[0-9]{10}" placeholder="10 digit mobile number" required>
                 </div>
                 
-              
                 <div class="form-group">
-                    <label for="branch">Branch Name (e.g., CSE, ME, ECE)</label>
-                    <input type="text" id="branch" name="branch" required>
+                    <label for="branch">Branch *</label>
+                    <input type="text" id="branch" name="branch" placeholder="e.g., CSE, ME, ECE" required>
                 </div>
 
-               
                 <div class="form-group">
-                    <label for="college">College</label>
+                    <label for="college">College *</label>
                     <select id="college" name="college" required>
                         <option value="" disabled selected>Select your college</option>
                         <option value="CEC">CEC</option>
@@ -279,81 +263,96 @@
                 </div>
 
                 <div class="form-group">
-                    <label for="year">Year of Study</label>
-                    <select id="year" name="year">
+                    <label for="year">Year of Study *</label>
+                    <select id="year" name="year" required>
+                        <option value="" disabled selected>Select year</option>
                         <option value="1st Year">1st Year</option>
                         <option value="2nd Year">2nd Year</option>
                         <option value="3rd Year">3rd Year</option>
                         <option value="4th Year">4th Year</option>
                     </select>
                 </div>
+
                 <div class="form-group">
                     <label for="message">Any questions or comments? (Optional)</label>
                     <textarea id="message" name="message" rows="4"></textarea>
                 </div>
+
                 <button type="submit" class="submit-btn" id="submit-button">Register for Event</button>
+                <p class="error-message" id="error-message"></p>
             </form>
         </div>
     </section>
 
-    <!-- Simple Footer -->
     <footer>
         <p>&copy; 2025 Tech Amigos Club - CGC Landran</p>
     </footer>
 
-
     <script>
         const form = document.getElementById('registration-form');
         const submitButton = document.getElementById('submit-button');
+        const errorMessage = document.getElementById('error-message');
         
-        // 1. GOOGLE APPS SCRIPT URL:
-        // Follow the instructions in 'setup_google_sheet.md' and paste script URL here.
+        // IMPORTANT: Replace with your actual Google Apps Script Web App URL (must end with /exec)
         const googleScriptURL = 'https://script.google.com/macros/s/AKfycbx5he8sV52fsYKeOzruyxXZHq75X4CntXGgw7Tqu1UU/dev';
-
-        // 2. FormSubmit URL
+        
+        // FormSubmit URL
         const formSubmitURL = 'https://formsubmit.co/raviraj17a@gmail.com';
-
-        // 3. Thank You Page URL
+        
+        // Thank You Page
         const thankYouURL = 'thankyou.html';
 
         form.addEventListener('submit', async (e) => {
-            e.preventDefault(); // Stop the form from submitting normally
+            e.preventDefault();
             
-            // Disable the button to prevent multiple submissions
+            // Hide any previous error messages
+            errorMessage.style.display = 'none';
+            
+            // Disable button and show loading state
             submitButton.disabled = true;
             submitButton.textContent = 'Submitting...';
 
             const formData = new FormData(form);
 
             try {
-                // --- Task 1: Send data to Google Sheets ---
-                // We use 'no-cors' mode because Google Scripts often have CORS issues.
-                // This sends the data but doesn't wait for a response, which is fine.
-                await fetch(googleScriptURL, {
+                // Send to Google Sheets (no-cors mode, fire and forget)
+                fetch(googleScriptURL, {
                     method: 'POST',
-                    mode: 'no-cors', 
+                    mode: 'no-cors',
                     body: formData
+                }).catch(err => console.log('Google Sheets request sent'));
+
+                // Small delay to ensure Google Sheets request starts
+                await new Promise(resolve => setTimeout(resolve, 500));
+
+                // Send to FormSubmit for email notification
+                const emailResponse = await fetch(formSubmitURL, {
+                    method: 'POST',
+                    body: formData,
+                    headers: {
+                        'Accept': 'application/json'
+                    }
                 });
 
-                // --- Task 2: Send data to FormSubmit (for email) ---
-                await fetch(formSubmitURL, {
-                    method: 'POST',
-                    body: formData
-                });
-
-                // --- Task 3: Redirect to Thank You page ---
-                window.location.href = thankYouURL;
+                if (emailResponse.ok) {
+                    // Success - redirect to thank you page
+                    window.location.href = thankYouURL;
+                } else {
+                    throw new Error('Email submission failed');
+                }
 
             } catch (error) {
                 console.error('Error submitting form:', error);
-                // If something fails, re-enable the button and show an error
+                
+                // Re-enable button
                 submitButton.disabled = false;
                 submitButton.textContent = 'Register for Event';
-                alert('There was an error submitting your registration. Please try again.');
+                
+                // Show error message
+                errorMessage.textContent = 'There was an error submitting your registration. Please try again or contact us directly.';
+                errorMessage.style.display = 'block';
             }
         });
     </script>
-
 </body>
 </html>
-
