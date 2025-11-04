@@ -178,6 +178,12 @@
             box-shadow: 0 6px 20px rgba(33, 128, 141, 0.4);
             background: var(--color-primary-dark);
         }
+        
+        /* Style for the button when it's loading */
+        .submit-btn:disabled {
+            background: #aaa;
+            cursor: not-allowed;
+        }
 
         /* --- Simple Footer --- */
         footer {
@@ -206,13 +212,18 @@
         <div class="form-container">
             <p style="text-align: center; font-size: 1.1rem; margin-bottom: 2rem;">Register for one of our upcoming events! Fill out the form below to secure your spot.</p>
 
-            <form action="https://formsubmit.co/raviraj17a@gmail.com" method="POST">
+            <!-- 
+                NOTE: The form no longer has an 'action' or 'method' attribute.
+                It's handled by the JavaScript below.
+                I've given it an id="registration-form".
+            -->
+            <form id="registration-form">
 
-                <!-- This changes the email subject line you receive -->
+                <!-- Your FormSubmit info is now in the script -->
                 <input type="hidden" name="_subject" value="New Event Registration!">
                 
-                <!-- This sends the user to a "thank you" page (optional) -->
-                <input type="hidden" name="_next" value="https://tech-amigos-eight.vercel.app/thankyou.html">
+                <!-- UPDATED to relative path -->
+                <input type="hidden" name="_next" value="thankyou.html">
 
                 <div class="form-group">
                     <label for="event">Select Event</label>
@@ -227,10 +238,46 @@
                     <label for="name">Full Name</label>
                     <input type="text" id="name" name="name" required>
                 </div>
+
+                
+                <div class="form-group">
+                    <label for="roll_number">Roll Number</label>
+                    <input type="text" id="roll_number" name="roll_number" required>
+                </div>
+
                 <div class="form-group">
                     <label for="email">Email Address</label>
                     <input type="email" id="email" name="email" required>
                 </div>
+
+              
+                <div class="form-group">
+                    <label for="mobile_number">Mobile Number</label>
+                    <input type="tel" id="mobile_number" name="mobile_number" required>
+                </div>
+                
+              
+                <div class="form-group">
+                    <label for="branch">Branch Name (e.g., CSE, ME, ECE)</label>
+                    <input type="text" id="branch" name="branch" required>
+                </div>
+
+               
+                <div class="form-group">
+                    <label for="college">College</label>
+                    <select id="college" name="college" required>
+                        <option value="" disabled selected>Select your college</option>
+                        <option value="CEC">CEC</option>
+                        <option value="COE">COE</option>
+                        <option value="CCT">CCT</option>
+                        <option value="CBSA">CBSA</option>
+                        <option value="CCP">CCP</option>
+                        <option value="CCET">CCET</option>
+                        <option value="CCHM">CCHM</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+
                 <div class="form-group">
                     <label for="year">Year of Study</label>
                     <select id="year" name="year">
@@ -244,7 +291,7 @@
                     <label for="message">Any questions or comments? (Optional)</label>
                     <textarea id="message" name="message" rows="4"></textarea>
                 </div>
-                <button type="submit" class="submit-btn">Register for Event</button>
+                <button type="submit" class="submit-btn" id="submit-button">Register for Event</button>
             </form>
         </div>
     </section>
@@ -253,6 +300,59 @@
     <footer>
         <p>&copy; 2025 Tech Amigos Club - CGC Landran</p>
     </footer>
+
+
+    <script>
+        const form = document.getElementById('registration-form');
+        const submitButton = document.getElementById('submit-button');
+        
+        // 1. GOOGLE APPS SCRIPT URL:
+        // Follow the instructions in 'setup_google_sheet.md' and paste script URL here.
+        const googleScriptURL = 'https://script.google.com/macros/s/AKfycbx5he8sV52fsYKeOzruyxXZHq75X4CntXGgw7Tqu1UU/dev';
+
+        // 2. FormSubmit URL
+        const formSubmitURL = 'https://formsubmit.co/raviraj17a@gmail.com';
+
+        // 3. Thank You Page URL
+        const thankYouURL = 'thankyou.html';
+
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault(); // Stop the form from submitting normally
+            
+            // Disable the button to prevent multiple submissions
+            submitButton.disabled = true;
+            submitButton.textContent = 'Submitting...';
+
+            const formData = new FormData(form);
+
+            try {
+                // --- Task 1: Send data to Google Sheets ---
+                // We use 'no-cors' mode because Google Scripts often have CORS issues.
+                // This sends the data but doesn't wait for a response, which is fine.
+                await fetch(googleScriptURL, {
+                    method: 'POST',
+                    mode: 'no-cors', 
+                    body: formData
+                });
+
+                // --- Task 2: Send data to FormSubmit (for email) ---
+                await fetch(formSubmitURL, {
+                    method: 'POST',
+                    body: formData
+                });
+
+                // --- Task 3: Redirect to Thank You page ---
+                window.location.href = thankYouURL;
+
+            } catch (error) {
+                console.error('Error submitting form:', error);
+                // If something fails, re-enable the button and show an error
+                submitButton.disabled = false;
+                submitButton.textContent = 'Register for Event';
+                alert('There was an error submitting your registration. Please try again.');
+            }
+        });
+    </script>
 
 </body>
 </html>
