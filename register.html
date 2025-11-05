@@ -182,14 +182,6 @@
             transform: none;
         }
 
-        footer {
-            text-align: center;
-            padding: 2rem;
-            background: var(--color-light);
-            color: #888;
-            font-size: 0.9rem;
-        }
-
         .error-message {
             color: var(--color-accent);
             font-size: 0.9rem;
@@ -293,7 +285,7 @@
         const submitButton = document.getElementById('submit-button');
         const errorMessage = document.getElementById('error-message');
         
-        // IMPORTANT: Replace with your actual Google Apps Script Web App URL (must end with /exec)
+       
         const googleScriptURL = 'https://script.google.com/macros/s/AKfycbyr-oIFTXiwkHl82Lx5QqCjXu4f_g8zD1SxzCTOkraUnZdMueId1N7dwCIR7YYXWyJn5Q/exec';
         
         // FormSubmit URL
@@ -312,7 +304,11 @@
             submitButton.disabled = true;
             submitButton.textContent = 'Submitting...';
 
+            const uniqueID = `TAC-${Date.now().toString().slice(-7)}`;
+
             const formData = new FormData(form);
+
+            formData.append('Registration ID', uniqueID);
 
             try {
                 // Send to Google Sheets (no-cors mode, fire and forget)
@@ -335,6 +331,10 @@
                 });
 
                 if (emailResponse.ok) {
+                    // Store the unique ID in session storage to display on thank you page
+                    sessionStorage.setItem('registrationID', uniqueID);
+             
+
                     // Success - redirect to thank you page
                     window.location.href = thankYouURL;
                 } else {
@@ -354,7 +354,5 @@
             }
         });
     </script>
-</body>
+    </body>
 </html>
-
-
