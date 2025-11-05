@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Our Team - Tech Amigos Club</title>
     <style>
-        /* Copied all styles from index.html to ensure consistency */
         :root {
             --color-primary: #21808d;
             --nav-height: 72px;
@@ -27,22 +26,22 @@
             line-height: 1.6;
             color: var(--color-dark);
             background-color: var(--color-light);
-            padding-top: var(--nav-height); /* Add padding to offset fixed nav */
+            padding-top: var(--nav-height);
         }
 
-        /* --- Simple Nav for Team Page --- */
+        /* Optimized Nav - Removed backdrop-filter */
         nav {
-            background: rgba(26, 26, 46, 0.95);
-            backdrop-filter: blur(8px);
+            background: rgba(26, 26, 46, 0.98);
             height: var(--nav-height);
             padding: 0 5%;
-            position: fixed; /* Fixed at the top */
+            position: fixed;
             width: 100%;
             top: 0;
             z-index: 1000;
             box-shadow: 0 2px 20px rgba(0, 0, 0, 0.12);
             display: flex;
             align-items: center;
+            will-change: transform; /* GPU acceleration hint */
         }
 
         nav .container {
@@ -79,7 +78,6 @@
             color: var(--color-primary);
         }
 
-        /* --- Copied Section Styles --- */
         section {
             padding: 5rem 5%;
             max-width: 1400px;
@@ -107,25 +105,11 @@
             border-radius: 2px;
         }
 
-        /* --- Copied Team Styles --- */
+        /* Optimized Team Section */
         #team {
-            background-image: url('IMG_0073-1.jpg');
-            background-size: cover;
-            background-position: center;
-            background-attachment: fixed;
+            background: var(--color-light);
             position: relative;
             min-height: calc(100vh - var(--nav-height));
-        }
-
-        #team::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(245, 245, 245, 0.93);
-            z-index: 1;
         }
 
         #team > * {
@@ -142,7 +126,6 @@
             padding-bottom: 0.5rem;
             border-bottom: 2px solid rgba(33, 128, 141, 0.2);
             display: block;
-            width: -moz-fit-content;
             width: fit-content;
             margin-left: auto;
             margin-right: auto;
@@ -161,7 +144,8 @@
             padding: 2rem;
             text-align: center;
             box-shadow: 0 5px 25px rgba(0, 0, 0, 0.1);
-            transition: transform 0.3s;
+            transition: transform 0.3s ease;
+            will-change: transform; /* GPU acceleration */
         }
 
         .team-card:hover {
@@ -195,29 +179,40 @@
             font-size: 0.95rem;
         }
         
-        /* --- CSS FOR 2-2-1 LAYOUT --- */
-        /* This class changes the grid to a flexbox layout to center the 5th card */
         .team-grid-flex-center {
             display: flex;
             flex-wrap: wrap;
-            justify-content: center; /* This centers the cards horizontally */
+            justify-content: center;
             gap: 2.5rem;
             margin-top: 3rem;
-            
-            /* Nullify the original grid-template-columns property */
             grid-template-columns: none; 
         }
 
-        /* We need to give the cards a size for flexbox to work with */
         .team-grid-flex-center .team-card {
-            flex-basis: 280px; /* Each card will be at least 280px wide */
-            flex-grow: 1;      /* Cards can grow to fill space */
-            max-width: 340px;  /* But they won't grow larger than 340px */
+            flex-basis: 280px;
+            flex-grow: 1;
+            max-width: 340px;
         }
-        /* --- END OF CSS --- */
 
+        /* Simple fade-in animation - runs once */
+        .fade-in {
+            opacity: 0;
+            animation: fadeIn 0.6s ease forwards;
+        }
 
-        /* --- Simple Footer --- */
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+            }
+        }
+
+        /* Stagger delays for cards */
+        .team-card:nth-child(1) { animation-delay: 0.1s; }
+        .team-card:nth-child(2) { animation-delay: 0.2s; }
+        .team-card:nth-child(3) { animation-delay: 0.3s; }
+        .team-card:nth-child(4) { animation-delay: 0.4s; }
+        .team-card:nth-child(5) { animation-delay: 0.5s; }
+
         footer {
             text-align: center;
             padding: 2rem;
@@ -242,83 +237,82 @@
         <h2 class="section-title">Our Team</h2>
         
         <h3 class="section-subtitle">Tech Team</h3>
-        <div class="team-grid"> <div class="team-card">
+        <div class="team-grid">
+            <div class="team-card fade-in">
                 <img src="/team/Ayush.jpg" alt="Tech Member 1" class="team-avatar-img">
                 <h3>Ayush</h3>
                 <p class="role">Developer</p>
                 <p>Description of their role or skills.</p>
             </div>
-            <div class="team-card">
+            <div class="team-card fade-in">
                 <img src="/team/Raviraj.jpg" alt="Tech Member 2" class="team-avatar-img">
                 <h3>Raviraj</h3>
                 <p class="role">Developer</p>
                 <p>Description of their role or skills.</p>
             </div>
-            <div class="team-card">
+            <div class="team-card fade-in">
                 <img src="/team/Siddharth_.jpg" alt="Tech Member 3" class="team-avatar-img">
                 <h3>Siddharth</h3>
                 <p class="role">Developer</p>
                 <p>Description of their role or skills.</p>
             </div>
-
         </div>
 
         <h3 class="section-subtitle">Sponsorship Team</h3>
         <div class="team-grid team-grid-flex-center">
-            <div class="team-card">
+            <div class="team-card fade-in">
                 <img src="/team/Hansika.jpg" alt="Sponsorship Member 1" class="team-avatar-img">
                 <h3>Hansika</h3>
                 <p class="role">Sponsorship Head</p>
                 <p>Description of their role or skills.</p>
             </div>
-            <div class="team-card">
+            <div class="team-card fade-in">
                 <img src="/team/Kritika.jpg" alt="Sponsorship Member 4" class="team-avatar-img">
                 <h3>Kritika</h3>
                 <p class="role">Coordinator</p>
                 <p>Description of their role or skills.</p>
             </div>
-            <div class="team-card">
+            <div class="team-card fade-in">
                 <img src="/team/Himanshu.jpg" alt="Sponsorship Member 3" class="team-avatar-img">
                 <h3>Himanshu</h3>
                 <p class="role">Outreach</p>
                 <p>Description of their role or skills.</p>
             </div>
-            <div class="team-card">
+            <div class="team-card fade-in">
                 <img src="/team/Harsimar_Kaur.jpg" alt="Sponsorship Member 2" class="team-avatar-img">
                 <h3>Harsimar Kaur</h3>
                 <p class="role">Outreach</p>
                 <p>Description of their role or skills.</p>
             </div>
-        
         </div>
         
         <h3 class="section-subtitle">Documentation Team</h3>
         <div class="team-grid team-grid-flex-center">
-            <div class="team-card">
+            <div class="team-card fade-in">
                 <img src="/team/Muskan.jpg" alt="Docs Member 1" class="team-avatar-img">
                 <h3>Muskan</h3>
                 <p class="role">Content Writer</p>
                 <p>Description of their role or skills.</p>
             </div>
-            <div class="team-card">
+            <div class="team-card fade-in">
                 <img src="/team/Aarzoo.jpg" alt="Docs Member 2" class="team-avatar-img">
                 <h3>Aarzoo</h3>
                 <p class="role">Technical Writer</p>
                 <p>Description of their role or skills.</p>
             </div>
-            <div class="team-card">
+            <div class="team-card fade-in">
                 <img src="/team/Anshika.jpg" alt="Docs Member 3" class="team-avatar-img">
                 <h3>Anshika</h3>
                 <p class="role">Technical Writer</p>
                 <p>Description of their role or skills.</p>
             </div>
-            <div class="team-card">
+            <div class="team-card fade-in">
                 <img src="/team/Harsh.jpg" alt="Docs Member 4" class="team-avatar-img">
                 <h3>Harsh</h3>
                 <p class="role">Content Creator</p>
                 <p>Description of their role or skills.</p>
             </div>
-            <div class="team-card">
+            <div class="team-card fade-in">
                 <img src="/team/Anshika.jpg" alt="Docs Member 5" class="team-avatar-img">
                 <h3>Anshika</h3>
                 <p class="role">Content Creator</p>
@@ -327,82 +321,66 @@
         </div>
 
         <h3 class="section-subtitle">Media and content</h3>
-         <div class="team-grid team-grid-flex-center">
-            <div class="team-card">
+        <div class="team-grid team-grid-flex-center">
+            <div class="team-card fade-in">
                 <img src="/team/Harshvardhan_.jpg" alt="Media Member 1" class="team-avatar-img">
                 <h3>Harshvardhan</h3>
-                <p class="role">Media writer</p>
+                <p class="role">Media Lead</p>
                 <p>Description of their role or skills.</p>
             </div>
-            <div class="team-card">
+            <div class="team-card fade-in">
                 <img src="/team/Saumayajit.jpg" alt="Media Member 2" class="team-avatar-img">
                 <h3>Saumayajit</h3>
                 <p class="role">Media Writer</p>
                 <p>Description of their role or skills.</p>
             </div>
-            <div class="team-card">
+            <div class="team-card fade-in">
                 <img src="/team/Prince_.jpg" alt="Media Member 3" class="team-avatar-img">
                 <h3>Prince</h3>
                 <p class="role">Media Writer</p>
                 <p>Description of their role or skills.</p>
             </div>
-            <div class="team-card">
+            <div class="team-card fade-in">
                 <img src="/team/Navdeep.jpg" alt="Media Member 4" class="team-avatar-img">
                 <h3>Navdeep</h3>
                 <p class="role">Content Creator</p>
                 <p>Description of their role or skills.</p>
             </div>
-            <div class="team-card">
+            <div class="team-card fade-in">
                 <img src="/team/Satvik.jpg" alt="Media Member 5" class="team-avatar-img">
                 <h3>Satvik</h3>
                 <p class="role">Content Creator</p>
                 <p>Description of their role or skills.</p>
             </div>
         </div>
-
     </section>
 
     <footer>
         <p>&copy; 2025 Tech Amigos Club - CGC Landran</p>
     </footer>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
-    
     <script>
-        // GSAP Scroll Animations for the team page
-        gsap.registerPlugin(ScrollTrigger);
+        // Lightweight Intersection Observer for scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
 
-        gsap.utils.toArray('.team-card').forEach((card, i) => {
-            gsap.from(card, {
-                scrollTrigger: {
-                    trigger: card,
-                    start: "top bottom-=100",
-                    toggleActions: "play none none reverse"
-                },
-                opacity: 0,
-                y: 50,
-                duration: 0.8,
-                delay: (i % 3) * 0.1, // Stagger cards in rows
-                ease: "power2.out"
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('fade-in');
+                    observer.unobserve(entry.target); // Stop observing after animation
+                }
             });
-        });
+        }, observerOptions);
 
-        gsap.utils.toArray('.section-title, .section-subtitle').forEach(title => {
-            gsap.from(title, {
-                scrollTrigger: {
-                    trigger: title,
-                    start: "top bottom-=50",
-                    toggleActions: "play none none reverse"
-                },
-                opacity: 0,
-                y: 30,
-                duration: 0.8,
-                ease: "power2.out"
-            });
+        // Observe only elements that need animation
+        document.querySelectorAll('.team-card').forEach(card => {
+            card.classList.remove('fade-in'); // Remove initial class
+            observer.observe(card);
         });
     </script>
 
 </body>
 </html>
-
