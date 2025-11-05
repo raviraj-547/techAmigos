@@ -26,19 +26,18 @@
             line-height: 1.6;
             color: var(--color-dark);
             background-color: var(--color-light);
-            padding-top: var(--nav-height); /* Add padding to offset fixed nav */
+            padding-top: var(--nav-height);
             display: flex;
             flex-direction: column;
             min-height: 100vh;
         }
 
-        /* --- Simple Nav --- */
         nav {
             background: rgba(26, 26, 46, 0.95);
             backdrop-filter: blur(8px);
             height: var(--nav-height);
             padding: 0 5%;
-            position: fixed; /* Fixed at the top */
+            position: fixed;
             width: 100%;
             top: 0;
             z-index: 1000;
@@ -81,7 +80,6 @@
             color: var(--color-primary);
         }
 
-        /* --- Thank You Content --- */
         .content-wrapper {
             flex-grow: 1;
             display: flex;
@@ -129,7 +127,30 @@
             background: var(--color-primary-dark);
         }
 
-        /* --- Simple Footer --- */
+        .reg-id-container {
+            margin-top: 2rem;
+            margin-bottom: 2.5rem;
+            padding: 1.5rem;
+            background-color: var(--color-light);
+            border-radius: 8px;
+            border: 1px dashed var(--color-primary);
+        }
+        .reg-id-container p {
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+            color: var(--color-dark);
+        }
+        .reg-id-container strong {
+            color: var(--color-primary-dark);
+            font-size: 1.8rem;
+            font-weight: 700;
+            display: block;
+            letter-spacing: 1px;
+            user-select: all;
+        }
+
+
+
         footer {
             text-align: center;
             padding: 2rem;
@@ -152,7 +173,6 @@
 </head>
 <body>
 
-    <!-- Simple Navigation -->
     <nav>
         <div class="container">
             <div class="logo">Tech <span>Amigos</span></div>
@@ -160,19 +180,42 @@
         </div>
     </nav>
 
-    <!-- Thank You Content -->
     <div class="content-wrapper">
         <div class="thank-you-card">
             <h1>Thank You!</h1>
             <p>Your event registration has been received. We've saved your spot and will send a confirmation email shortly. We look forward to seeing you there!</p>
+            
+            <div class="reg-id-container">
+                <p>Please save your unique Registration ID:</p>
+                <strong id="registration-id">Loading...</strong>
+            </div>
             <a href="index.html" class="btn">Back to Homepage</a>
         </div>
     </div>
 
-    <!-- Simple Footer -->
     <footer>
         <p>&copy; 2025 Tech Amigos Club - CGC Landran</p>
     </footer>
 
-</body>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const regIdElement = document.getElementById('registration-id');
+            if (regIdElement) {
+                // 1. Get the ID from session storage (where register.html saved it)
+                const registrationID = sessionStorage.getItem('registrationID');
+                
+                if (registrationID) {
+                    // 2. Display it
+                    regIdElement.textContent = registrationID;
+                    // 3. Clear it so it's not shown again if the user refreshes
+                    sessionStorage.removeItem('registrationID'); 
+                } else {
+                    // If no ID is found (e.g., user just visited the thank you page directly),
+                    // hide the ID box.
+                    regIdElement.parentElement.style.display = 'none';
+                }
+            }
+        });
+    </script>
+    </body>
 </html>
