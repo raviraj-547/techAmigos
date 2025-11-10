@@ -26,6 +26,7 @@
             line-height: 1.6;
             color: var(--color-dark);
             background-color: var(--color-light);
+            padding-top: var(--nav-height);
         }
 
         /* Navigation */
@@ -61,7 +62,7 @@
             width: 100%;
             gap: 1rem;
         }
-
+        
         nav .logo {
             font-size: 1.8rem;
             font-weight: bold;
@@ -69,6 +70,7 @@
             display: flex;
             align-items: center;
             gap: 0.5rem;
+            text-decoration: none;
         }
 
         nav .logo span {
@@ -215,16 +217,11 @@
             margin: 0 auto;
         }
 
-        /* Make hero section full-bleed (remove the section padding for the hero) */
+        /* Make hero section full-bleed */
         #home {
             padding: 0;
             max-width: 100%;
             margin: 0;
-        }
-
-        /* account for fixed nav so content isn't hidden behind it */
-        body {
-            padding-top: var(--nav-height);
         }
 
         .section-title {
@@ -409,11 +406,10 @@
             color: #666;
             margin-bottom: 1.5rem;
         }
-       
-        /* --- ADDED: Team Styles --- */
+        
+        /* --- Team Styles --- */
         #leadership {
-            /* This section has a light background, no image */
-             background-color: var(--color-light);
+            background-color: var(--color-light);
         }
 
         .section-subtitle {
@@ -430,7 +426,6 @@
             transform: translateX(-50%);
         }
 
-        /* Make first subtitle (leadership) have no top margin */
         #leadership .section-subtitle {
             margin-top: 0;
         }
@@ -653,14 +648,13 @@
             .about-content {
                 grid-template-columns: 1fr;
             }
- 
+
             .event-grid {
                 grid-template-columns: 1fr;
             }
 
-            /* ADDED */
             .team-grid {
-                 grid-template-columns: 1fr;
+                grid-template-columns: 1fr;
             }
             
             .form-container {
@@ -684,20 +678,266 @@
                 justify-content: center;
             }
         }
+
+
+        /* --- 
+           --- AI Assistant Styles
+           --- (Matching the Navbar)
+        --- */
+
+        #tac-ai-assistant {
+            --ta-primary: #21808d;
+            --ta-dark: #1a1a2e;
+            --ta-white: #ffffff;
+            --ta-accent: #c0152f;
+            position: fixed;
+            right: 20px;
+            bottom: 24px;
+            z-index: 4000;
+        }
+
+        /* Floating Button */
+        #tac-ai-floating-btn {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: rgba(26, 26, 46, 0.95);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 8px 30px rgba(0,0,0,0.2);
+            color: var(--ta-white);
+            cursor: pointer;
+            display: grid;
+            place-items: center;
+            transition: all 0.3s ease;
+            overflow: hidden; /* For icon switch */
+        }
+        
+        #tac-ai-floating-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 35px rgba(0,0,0,0.25);
+        }
+
+        #tac-ai-floating-btn svg {
+            width: 28px;
+            height: 28px;
+            transition: transform 0.3s ease, opacity 0.3s ease;
+            position: absolute;
+        }
+
+        /* Icon Switch Animation */
+        #tac-ai-floating-btn .icon-chat {
+            transform: scale(1);
+            opacity: 1;
+        }
+        #tac-ai-floating-btn .icon-close {
+            transform: scale(0.5) rotate(-90deg);
+            opacity: 0;
+        }
+
+        #tac-ai-assistant.open #tac-ai-floating-btn .icon-chat {
+            transform: scale(0.5) rotate(90deg);
+            opacity: 0;
+        }
+        #tac-ai-assistant.open #tac-ai-floating-btn .icon-close {
+            transform: scale(1) rotate(0deg);
+            opacity: 1;
+        }
+
+
+        /* Panel */
+        #tac-ai-panel {
+            width: 360px;
+            max-width: calc(100vw - 40px);
+            height: 520px;
+            background: var(--ta-white);
+            border-radius: 14px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.25);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            transform-origin: bottom right;
+            position: absolute; 
+            bottom: 80px; 
+            right: 0;
+            opacity: 0;
+            transform: translateY(20px) scale(0.95);
+            transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+            pointer-events: none;
+        }
+        
+        #tac-ai-assistant.open #tac-ai-panel {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+            pointer-events: auto;
+        }
+
+        /* Header */
+        #tac-ai-header {
+            background: rgba(26, 26, 46, 0.95);
+            backdrop-filter: blur(8px);
+            color: var(--ta-white);
+            padding: 12px 14px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-shrink: 0;
+        }
+        #tac-ai-header .title-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        #tac-ai-header .avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 8px;
+            background: rgba(255,255,255,0.2);
+            display: grid;
+            place-items: center;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+        }
+        #tac-ai-header .avatar svg {
+            width: 22px;
+            height: 22px;
+            stroke-width: 2;
+        }
+        #tac-ai-header .title { font-weight: 700; font-size: 1rem; }
+        #tac-ai-close { 
+            margin-left: auto; 
+            background: transparent; 
+            border: 0; 
+            color: white; 
+            font-size: 1.2rem; 
+            cursor: pointer; 
+            opacity: 0.7;
+            transition: opacity 0.2s;
+        }
+        #tac-ai-close:hover { opacity: 1; }
+
+        /* Body / Chat Area */
+        #tac-ai-body {
+            padding: 12px;
+            background: #f7f9fb;
+            flex: 1;
+            overflow-y: auto;
+        }
+
+        .tac-msg { 
+            max-width: 82%; 
+            margin-bottom: 10px; 
+            padding: 10px 12px; 
+            border-radius: 12px; 
+            line-height: 1.4; 
+            position: relative;
+            word-wrap: break-word;
+        }
+        
+        .tac-msg.ai { 
+            background: #fff; 
+            color: #222; 
+            box-shadow: 0 6px 18px rgba(0,0,0,0.05);
+            border-bottom-left-radius: 4px; /* For the 'tail' */
+            float: left;
+            clear: both;
+        }
+
+        .tac-msg.user { 
+            /* === ***THIS IS THE CHANGE*** === */
+            background: var(--color-primary); /* Was var(--color-dark) */
+            /* ================================ */
+            color: white; 
+            float: right; 
+            clear: both;
+            border-bottom-right-radius: 4px; /* For the 'tail' */
+        }
+        
+        /* Clear floats */
+        #tac-messages::after {
+            content: "";
+            display: table;
+            clear: both;
+        }
+
+        .tac-sys-note { 
+            font-size: 12px; 
+            color: #666; 
+            margin-bottom: 10px; 
+            text-align: center;
+            width: 100%;
+            clear: both;
+        }
+        
+        /* Footer / Input */
+        #tac-ai-footer { 
+            padding: 10px; 
+            display: flex; 
+            gap: 8px; 
+            align-items: center; 
+            border-top: 1px solid rgba(0,0,0,0.06); 
+            background: #fff;
+            flex-shrink: 0;
+        }
+        #tac-input { 
+            flex: 1; 
+            padding: 10px 12px; 
+            border-radius: 999px; 
+            border: 1px solid #ddd; 
+            outline: none; 
+            font-size: 0.95rem;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+        #tac-input:focus {
+            border-color: var(--ta-primary);
+            box-shadow: 0 0 0 3px rgba(33, 128, 141, 0.1);
+        }
+        
+        #tac-send { 
+            background: var(--color-dark);
+            color: white; 
+            border: none; 
+            width: 40px;
+            height: 40px;
+            border-radius: 50%; 
+            cursor: pointer;
+            display: grid;
+            place-items: center;
+            transition: background-color 0.2s ease, transform 0.2s ease;
+        }
+        #tac-send:hover {
+            background: #0f0f1a; /* Darker version */
+            transform: scale(1.05);
+        }
+        #tac-send svg {
+            width: 20px;
+            height: 20px;
+            margin-left: 2px;
+        }
+
+        /* small-screen adjustments */
+        @media (max-width:420px){
+            #tac-ai-panel { 
+                width: calc(100vw - 20px);
+                max-width: calc(100vw - 20px);
+                height: 70vh; 
+                right: -10px; /* Re-center */
+                bottom: 80px; 
+            }
+            #tac-ai-floating-btn { width:56px;height:56px; }
+            #tac-ai-assistant { right: 10px; bottom: 10px; }
+        }
+        
     </style>
 </head>
 <body>
-    <!-- Navigation -->
     <nav>
         <div class="container">
-            <div class="logo">Tech <span>Amigos</span></div>
+            <a href="#home" class="logo">Tech <span>Amigos</span></a>
             <button id="nav-toggle" aria-controls="main-nav" aria-expanded="false" aria-label="Toggle navigation">☰</button>
             <ul id="main-nav">
                 <li><a href="#home">Home</a></li>
-                <!-- RE-ORDERED -->
                 <li><a href="#events">Events</a></li> 
                 <li><a href="#about">About</a></li>
-                <!-- UPDATED LINK -->
                 <li><a href="activities.html">Activities</a></li>
                 <li><a href="team.html">Team</a></li>
                 <li><a href="register.html" target="_blank">Register</a></li>
@@ -705,7 +945,6 @@
         </div>
     </nav>
 
-    <!-- Hero Section -->
     <section id="home" class="hero">
         <div class="hero-background">
             <div class="hero-slide active">
@@ -747,7 +986,6 @@
         </div>
     </section>
 
-    <!-- --- Upcoming Events Section --- -->
     <section id="events">
         <h2 class="section-title">Upcoming Events</h2>
         <div class="event-grid">
@@ -768,7 +1006,6 @@
 
 
 
-    <!-- Trophy Section -->
     <section>
         <div class="trophy-section">
             <div class="trophy-content">
@@ -782,7 +1019,6 @@
         </div>
     </section>
 
-    <!-- --- ADDED: Leadership Section --- -->
     <section id="leadership">
         <h2 class="section-title">Our Leadership</h2>
         <div class="team-grid">
@@ -811,7 +1047,6 @@
     </section>
 
 
-    <!-- About Section -->
     <section id="about">
         <h2 class="section-title">About Us</h2>
         <div class="about-content">
@@ -827,7 +1062,6 @@
         </div>
     </section>
 
-    <!-- Footer -->
     <footer>
         <div class="footer-container">
             <div class="footer-column" id="footer-about">
@@ -837,9 +1071,9 @@
             <div class="footer-column" id="footer-connect">
                 <h3>Connect With Us</h3>
                 <ul class="social-links">
-                    <li><a href="https://in.linkedin.com/in/techamigos-cgc-landran-214626284?trk=public_post_feed-actor-image">💼 Follow us on LinkedIn</a></li>
+                    <li><a href="#">💼 Follow us on LinkedIn</a></li>
                     <li><a href="https://www.instagram.com/techamigosclub.dsw/">📷 Follow us on Instagram</a></li>
-                    <li><a href="#">📧dswtechamigos@cgc.edu.in </a></li>
+                    <li><a href="#">📧 dswtechamigos@cgc.edu.in </a></li>
                 </ul>
             </div>
             <div class="footer-column" id="footer-join">
@@ -855,7 +1089,6 @@
         </div>
     </footer>
 
-    <!-- Scripts -->
     <script>
         (function() {
             const navToggle = document.getElementById('nav-toggle');
@@ -868,7 +1101,6 @@
                 navToggle.setAttribute('aria-expanded', opened ? 'true' : 'false');
             });
 
-            // This part is for same-page links, it won't run for external links
             mainNav.querySelectorAll('a[href^="#"]').forEach(a => {
                 a.addEventListener('click', () => {
                     if (mainNav.classList.contains('open')) {
@@ -911,7 +1143,6 @@
         })();
     </script>
 
-    <!-- GSAP Libraries -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollToPlugin.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
@@ -932,7 +1163,6 @@
         }
         setInterval(showNextSlide, 4000);
 
-        // Updated smooth scroll to ignore external links
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 e.preventDefault();
@@ -956,7 +1186,6 @@
 
         gsap.registerPlugin(ScrollTrigger);
 
-        // Updated to only animate event cards on this page
         gsap.utils.toArray('.event-card').forEach((card, i) => {
             gsap.from(card, {
                 scrollTrigger: {
@@ -972,7 +1201,6 @@
             });
         });
 
-        // ADDED: Animate leadership team cards
         gsap.utils.toArray('.team-card').forEach((card, i) => {
             gsap.from(card, {
                 scrollTrigger: {
@@ -1016,6 +1244,210 @@
         
     </script>
     
+    <div id="tac-ai-assistant" aria-hidden="true">
+        <button id="tac-ai-floating-btn" aria-label="Open Tech Amigos Assistant">
+            <svg class="icon-chat" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+            <svg class="icon-close" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+        </button>
+
+        <div id="tac-ai-panel" role="dialog" aria-label="Tech Amigos Assistant">
+            <div id="tac-ai-header">
+                <div class="title-group">
+                    <div class="avatar">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"></path></svg>
+                    </div>
+                    <div class="title">Tech Amigos Assistant</div>
+                </div>
+                <button id="tac-ai-close" aria-label="Close">✕</button>
+            </div>
+
+            <div id="tac-ai-body" tabindex="0">
+                <div id="tac-messages">
+                    </div>
+            </div>
+
+            <div id="tac-ai-footer">
+                <input id="tac-input" type="text" placeholder="Ask a question..." aria-label="Ask the assistant"/>
+                <button id="tac-send" aria-label="Send">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"></line><polygon points="22 2 15 22 11 13 2 9 22 2"></polygon></svg>
+                </button>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+    (function(){
+        // CONFIG: backend URL / API key (leave empty for canned responses)
+        const ASSISTANT_BACKEND_URL = ""; // e.g. "https://your-cloud-function.example/assistant"
+        const ASSISTANT_API_KEY = ""; // optional
+
+        const floatingBtn = document.getElementById('tac-ai-floating-btn');
+        const panel = document.getElementById('tac-ai-panel');
+        const tacWrapper = document.getElementById('tac-ai-assistant');
+        const closeBtn = document.getElementById('tac-ai-close');
+        const messagesEl = document.getElementById('tac-messages');
+        const inputEl = document.getElementById('tac-input');
+        const sendBtn = document.getElementById('tac-send');
+        const bodyEl = document.getElementById('tac-ai-body');
+
+        if (!tacWrapper || !floatingBtn || !panel || !closeBtn || !messagesEl || !inputEl || !sendBtn) {
+            console.warn("Tech Amigos AI: One or more required elements not found.");
+            return;
+        }
+
+        const STORAGE_KEY = 'tac_ai_history_' + location.pathname;
+
+        const canned = [
+            { q: /register|registration|how to register/i, a: "To register, click the Register button (top-right) or visit the Register page. Fill the form and you'll receive a confirmation email." },
+            { q: /next event|upcoming event|when.*event/i, a: "Our next event is listed under Upcoming Events on the homepage. Visit the Events section for date, time and registration link." },
+            { q: /team|who are|members/i, a: "Check the Team page to see our leadership and team members. You can also contact us via dswtechamigos@cgc.edu.in." },
+            { q: /contact|email|whatsapp/i, a: "You can reach us at dswtechamigos@cgc.edu.in or join our WhatsApp group from the footer on the homepage." },
+            { q: /where|location|college/i, a: "We are Tech Amigos at CGC Landran — find details on the About section of the homepage." },
+            { q: /hello|hi|hey/i, a: "Hey! 👋 How can I help with Tech Amigos today? Try asking about events, registration, or team members." }
+        ];
+
+        function appendMessage(text, who='ai') {
+            const wrap = document.createElement('div');
+            wrap.className = 'tac-msg ' + (who === 'user' ? 'user' : 'ai');
+            wrap.textContent = text;
+            messagesEl.appendChild(wrap);
+            // keep scroll at bottom
+            bodyEl.scrollTop = bodyEl.scrollHeight;
+        }
+
+        function showTyping() {
+            const t = document.createElement('div');
+            t.className = 'tac-msg ai';
+            t.id = 'tac-typing';
+            t.textContent = 'Thinking…';
+            messagesEl.appendChild(t);
+            bodyEl.scrollTop = bodyEl.scrollHeight;
+        }
+
+        function hideTyping() {
+            const t = document.getElementById('tac-typing');
+            if (t) t.remove();
+        }
+
+        function saveHistory(history) {
+            try { localStorage.setItem(STORAGE_KEY, JSON.stringify(history)); } catch(e){}
+        }
+        function loadHistory() {
+            try { return JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]'); } catch(e){ return []; }
+        }
+
+        function renderHistory() {
+            messagesEl.innerHTML = ''; // Clear existing
+            // Add system note first
+            const sysNote = document.createElement('div');
+            sysNote.className = 'tac-sys-note';
+            sysNote.textContent = "Hi — I'm your on-site assistant. Ask about events, registration, or team info.";
+            messagesEl.appendChild(sysNote);
+            
+            const history = loadHistory();
+            if (history.length === 0) {
+                 const welcome = "Welcome to Tech Amigos! Ask me about events, registration or the team.";
+                 appendMessage(welcome, 'ai');
+                 saveHistory([{ who:'ai', text: welcome }]);
+            } else {
+                 history.forEach(item => appendMessage(item.text, item.who));
+            }
+        }
+
+        function openPanel() {
+            tacWrapper.classList.add('open');
+            tacWrapper.setAttribute('aria-hidden', 'false');
+            floatingBtn.setAttribute('aria-label', 'Close chat panel');
+            renderHistory();
+            setTimeout(()=> inputEl.focus(), 300); // Wait for animation
+        }
+        function closePanel() {
+            tacWrapper.classList.remove('open');
+            tacWrapper.setAttribute('aria-hidden', 'true');
+            floatingBtn.setAttribute('aria-label', 'Open Tech Amigos Assistant');
+        }
+
+        floatingBtn.addEventListener('click', () => {
+            const isOpen = tacWrapper.classList.contains('open');
+            if (!isOpen) openPanel(); else closePanel();
+        });
+        closeBtn.addEventListener('click', closePanel);
+
+        async function askAssistant(messageText) {
+            if (!messageText || !messageText.trim()) return;
+            const text = messageText.trim();
+            appendMessage(text, 'user');
+
+            const hist = loadHistory();
+            hist.push({ who: 'user', text });
+            saveHistory(hist);
+
+            inputEl.value = '';
+            showTyping();
+
+            // If backend configured, call it
+            if (ASSISTANT_BACKEND_URL) {
+                try {
+                    const payload = { message: text, page: location.pathname };
+                    const headers = { 'Content-Type': 'application/json' };
+                    if (ASSISTANT_API_KEY) headers['Authorization'] = 'Bearer ' + ASSISTANT_API_KEY;
+
+                    const resp = await fetch(ASSISTANT_BACKEND_URL, { method: 'POST', headers, body: JSON.stringify(payload) });
+                    let json = {};
+                    try { json = await resp.json(); } catch(e){ json = {}; }
+                    const reply = (json && (json.reply || json.response || json.answer)) || "Sorry, I couldn't get a response from the assistant backend.";
+                    hideTyping();
+                    appendMessage(reply, 'ai');
+                    hist.push({ who: 'ai', text: reply });
+                    saveHistory(hist);
+                    return;
+                } catch (err) {
+                    hideTyping();
+                    appendMessage("Couldn't reach the assistant backend. Showing local help instead.", 'ai');
+                }
+            }
+
+            // Fallback canned responses
+            setTimeout(() => { // Simulate network delay
+                const match = canned.find(c => c.q.test(text));
+                hideTyping();
+                if (match) {
+                    appendMessage(match.a, 'ai');
+                    hist.push({ who: 'ai', text: match.a });
+                    saveHistory(hist);
+                } else {
+                    const fallback = "I don't know that yet — try: 'How to register?', 'Next event?', or 'Who is the team?'.";
+                    appendMessage(fallback, 'ai');
+                    hist.push({ who: 'ai', text: fallback });
+                    saveHistory(hist);
+                }
+            }, 600);
+        }
+
+        sendBtn.addEventListener('click', () => askAssistant(inputEl.value));
+        inputEl.addEventListener('keydown', (e) => { if (e.key === 'Enter') { e.preventDefault(); askAssistant(inputEl.value); } });
+
+        // Accessibility: close panel on Escape
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && tacWrapper.classList.contains('open')) closePanel();
+        });
+
+        // Clean up storage older than 7 days
+        (function cleanupOld() {
+            try {
+                const metaKey = STORAGE_KEY + '_meta';
+                const meta = JSON.parse(localStorage.getItem(metaKey) || '{}');
+                const now = Date.now();
+                if (!meta.created) { meta.created = now; localStorage.setItem(metaKey, JSON.stringify(meta)); }
+                if (now - meta.created > 1000 * 60 * 60 * 24 * 7) {
+                    localStorage.removeItem(STORAGE_KEY);
+                    localStorage.removeItem(metaKey);
+                }
+            } catch(e){}
+        })();
+
+    })();
+    </script>
+
 </body>
 </html>
-
