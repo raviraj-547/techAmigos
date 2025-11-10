@@ -843,8 +843,8 @@
         }
 
         .tac-msg.user { 
-            /* === ***THIS IS THE CHANGE*** === */
-            background: var(--color-primary); /* Was var(--color-dark) */
+            
+            background: var(--color-primary); 
             /* ================================ */
             color: white; 
             float: right; 
@@ -893,7 +893,7 @@
         }
         
         #tac-send { 
-            background: var(--color-dark);
+            background: var(--color-primary);
             color: white; 
             border: none; 
             width: 40px;
@@ -905,7 +905,7 @@
             transition: background-color 0.2s ease, transform 0.2s ease;
         }
         #tac-send:hover {
-            background: #0f0f1a; /* Darker version */
+            background: var(--color-primary-dark); 
             transform: scale(1.05);
         }
         #tac-send svg {
